@@ -1,0 +1,58 @@
+
+import structure5.*;
+
+class GameTree {
+
+    protected HexBoard root;
+    protected Vector<HexMove> possibleMoves;
+    protected Vector<HexBoard> children;
+    protected char player;
+    public int i=0;
+    public GameTree(HexBoard start, char m) {
+
+	// Initialize the root as the given HexBoard
+	this.root = start;
+	this.player = m;
+	this.possibleMoves = start.moves(m);
+
+	// Initialize the children as the possible moves for 'm' from 'start'
+	this.children = new Vector<HexBoard>();
+	getChildren(this.root, this.possibleMoves);
+
+	System.out.println();
+    }
+
+    /**
+     * @pre start != null
+     * @post populates the GameTree with every possible game
+     **/ 
+    public void getChildren(HexBoard start, Vector<HexMove> moves) {
+
+	// Return when there are no more children to add
+	if (moves.isEmpty()) return;
+
+	// Populate the children of root
+	for (HexMove hm : moves) {
+
+	    // Add the next child of root
+	    children.add(new HexBoard(start, hm));
+
+	    // Populate the children of each child of root
+	    for (HexBoard hb : children) {
+		new GameTree(hb, hb.opponent(player));
+	    }
+	    
+	    System.out.println(++i);
+	}
+	
+    }
+    
+    public void pruneTree() {
+	
+    }
+
+    public static void main(String[] args) {
+	
+	GameTree gm = new GameTree(new HexBoard(), '*');
+    }
+}

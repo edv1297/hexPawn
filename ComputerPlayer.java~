@@ -1,0 +1,8 @@
+public class ComputerPLayer implements Player {
+
+
+    public Player play(GameTree node, Player opponent) {
+
+	return opponent;
+    }
+}
