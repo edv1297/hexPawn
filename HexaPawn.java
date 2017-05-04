@@ -1,54 +1,65 @@
-import java.util.Scanner;
-
+/**
+ *  SHIVAM PATEL & EDDY VARELA // WEDNESDAY PM
+ *
+ *  HexaPawn.java
+ *
+ *  A simple six pawn variant of the classic chess board game where
+ *  the objective is simply to reach the other side of the board or
+ *  to eliminate all opponent pieces or moves
+ *
+ **/
 public class HexaPawn {
     
     public static void main (String[] args) {
-	GameTree gt = new GameTree(new HexBoard(), '*');
+	// The two players
+        Player firstPlayer, secondPlayer;
+
+	// The dimensions for the board
+	int rows, cols;
 	
+	// Input check
+        if (args.length != 4) {
+            System.out.println ("Usage: java HexaPawn <row> <col> <playertype> <playertype>");
+            return;
+        } else try {
+                rows = Integer.parseInt(args[0]);
+		cols = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                System.out.println ("Usage: java HexaPawn <row> <col> <playertype> <playertype>");
+                return;
+            }
+	
+	if (rows < 0 || cols < 0) {
+	    System.out.println("Error: Dimensions cannot be negative");
+	    return;
+	}
+	      
+	switch (args[2]) {
+            case "comp" : firstPlayer = new ComputerPlayer('*');
+                          break;
+            case "human": firstPlayer = new HumanPlayer('*');
+                          break;
+            case "rand" : firstPlayer = new RandomPlayer('*');
+                          break;
+            default :     System.out.println ("Error: Invalid playertype!");
+                          return;
+        }
+
+        switch (args[3]) {
+            case "comp" : secondPlayer = new ComputerPlayer('o');
+                          break;
+            case "human": secondPlayer = new HumanPlayer('o');
+                          break;
+            case "rand" : secondPlayer = new RandomPlayer('o');
+                          break;
+            default :     System.out.println ("Error: Invalid playertype!");
+                          return;
+        }
+
+	// Construct the Game Tree as specified
+	GameTree gt = new GameTree (new HexBoard(rows, cols), '*');
+
+	// Play the game
+	firstPlayer.play(gt, secondPlayer);
     }
-
-    public static void main(String[] args)
-    {
-	HexBoard b = new HexBoard(3,3); // change me!
-	Vector<HexMove> moves;
-	Scanner in = new Scanner(System.in);
-	int yourMove;
-	int myMove;
-	Random gen = new Random();
-	System.out.println(b);
-
-	do
-	{
-	    // white to play (human): print moves
-	    moves = b.moves(WHITE);
-	    Iterator i = moves.iterator();
-	    int j = 0;
-	    while (i.hasNext())
-	    {
-		System.out.println(j+". "+i.next());
-		j++;
-	    }
-	    // read move from keyboard
-	    yourMove = in.nextInt();
-
-	    // construct a new board, based on move
-	    b = new HexBoard(b,moves.elementAt(yourMove));
-	    System.out.println(b);
-
-	    // if WHITE won, claim the victory and leave.
-	    if (b.win(WHITE)) { System.out.println("You win!"); break; }
-
-	    // black's move (compute): move randomly, but legally
-	    // get moves
-	    moves = b.moves(BLACK);
-	    // pick one
-	    myMove = gen.nextInt(moves.size());
-	    // construct new board
-	    b = new HexBoard(b,moves.elementAt(myMove));
-	    System.out.println("I "+moves.elementAt(myMove));
-	    System.out.println(b);
-	    // claim victory, if true
-	    if (b.win(BLACK)) { System.out.println("I win!"); break; }
-	} while (true);
-    
 }

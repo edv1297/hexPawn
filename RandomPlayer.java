@@ -5,13 +5,13 @@ public class RandomPlayer implements Player {
 	this.player = m; 
     }
 
-    public char getSymbol() {
-	return player;
-    }
-    
+    /** Returns this player's symbol */
+    public char getSymbol() {return player;}
+
+    /***/
     public Player play(GameTree node, Player opponent) {
 	
-	// Is this a losing scenario?
+	// Scenario analysis: win, loss, or neither?
 	if (node.getBoard().win(this.player)) {
 	    // The game is won, notify the other player and celebrate!
 	    System.out.println("The computer has won!");

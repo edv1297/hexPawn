@@ -1,4 +1,5 @@
 public class ComputerPlayer implements Player {
+
     protected char player;
     
     public ComputerPlayer(char m) {
@@ -11,7 +12,7 @@ public class ComputerPlayer implements Player {
     
     public Player play(GameTree node, Player opponent) {
 	
-	// Is this a losing scenario?
+	// Scenario analysis: win, loss, or neither?
 	if (node.getBoard().win(this.player)) {
 	    // The game is won, notify the other player and celebrate!
 	    System.out.println("The computer has won!");
