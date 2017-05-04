@@ -1,7 +1,7 @@
-public class ComputerPlayer implements Player {
+public class RandomPlayer implements Player {
     protected char player;
     
-    public ComputerPlayer(char m) {
+    public RandomPlayer(char m) {
 	this.player = m; 
     }
 
@@ -18,7 +18,6 @@ public class ComputerPlayer implements Player {
 	    return this;
 	} else if (node.getChildren().isEmpty()) {
 	    // The game is lost, admit defeat
-	    node.removeParent();
 	    System.out.println("You have lost");
 	    return opponent;
 	} else {

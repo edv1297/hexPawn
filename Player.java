@@ -10,5 +10,7 @@ public interface Player
     // pre: node is a non-null game tree node
     //      opponent is the player to play after this player
     // post: game is played from this node on; winning player is returned
+
+    public char getSymbol();
 }
  
