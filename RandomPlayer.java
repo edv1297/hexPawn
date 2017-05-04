@@ -14,11 +14,11 @@ public class RandomPlayer implements Player {
 	// Scenario analysis: win, loss, or neither?
 	if (node.getBoard().win(this.player)) {
 	    // The game is won, notify the other player and celebrate!
-	    System.out.println("The computer has won!");
+	    System.out.println("The random player has won!");
 	    return this;
 	} else if (node.getChildren().isEmpty()) {
 	    // The game is lost, admit defeat
-	    System.out.println("You have lost");
+	    System.out.println("The random player has lost");
 	    return opponent;
 	} else {
 	    // Make a move

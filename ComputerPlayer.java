@@ -1,3 +1,5 @@
+//SSP-EDV 
+
 public class ComputerPlayer implements Player {
 
     protected char player;
@@ -20,7 +22,7 @@ public class ComputerPlayer implements Player {
 	} else if (node.getChildren().isEmpty()) {
 	    // The game is lost, admit defeat
 	    node.removeParent();
-	    System.out.println("You have lost");
+	    System.out.println("Computer has lost");
 	    return opponent;
 	} else {
 	    // Make a move
