@@ -1,5 +1,5 @@
 /**
- *  SHIVAM PATEL & EDDY VARELA // WEDNESDAY PM
+ *  SHIVAM PATEL (+2 Design Doc) & EDDY VARELA (+2 Design Doc) // WEDNESDAY PM
  *
  *  HexaPawn.java
  *
