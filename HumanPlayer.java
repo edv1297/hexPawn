@@ -1,48 +1,63 @@
 import java.util.Scanner;
+import java.util.Iterator;
 
 public class HumanPlayer implements Player {
     protected char player;
-    
+    protected String result = "";
     public HumanPlayer(char m) {
-	this.player = m; 
+	this.player = m;
     }
 
-    public char getSymbol() {
-	return player;
-    }
+    /** Returns this player's symbol */
+    public char getSymbol() {return player;}
+
+    public boolean isComp() {return false;}
+
+    public String getResult(){return this.result;}
     
     public Player play(GameTree node, Player opponent) {
+
+	// Print the current board state
+	System.out.println(node.getBoard());
 	
-	// Is this a losing scenario?
+	// Scenario analysis: win, loss, or neither?
 	if (node.getBoard().win(this.player)) {
 	    // The game is won, notify the other player and celebrate!
 	    System.out.println("You have won!");
+	    result += "win";
 	    return this;
-	} else if (node.getChildren().isEmpty()) {
+	} else if (node.getBoard().win(opponent.getSymbol()) ||
+		   node.getChildren().isEmpty()) {
 	    // The game is lost, admit defeat
 	    System.out.println("You have lost");
-	    return opponent;
+	    result += "loss";
+	    return opponent.play(node,this);
 	} else {
-	    // Make a move
-	    Scanner scan = new Scanner(System.in);   
-	    int counter = 1;
-	    
-	    for (GameTree gt : node.getChildren()) {
-		System.out.println(counter + ". " + gt.getBoard());
-		++counter;
+            // Present all possible moves
+            Iterator iter = node.getBoard().moves(player).iterator();
+            int j = 0;
+	    while (iter.hasNext())
+	    {
+		System.out.println(j+". "+iter.next());
+		j++;
 	    }
-	    
+
+            // Listen for a selection
+            Scanner scan = new Scanner(System.in);
 	    int i = scan.nextInt();
 	    
 	    while (true) {
-		if(i > 0 && i <= node.getChildren().size()){
-		    node = node.getChildren().get(i-1);
+		if(i >= 0 && i < node.getChildren().size()){
+		    node = node.getChildren().get(i);
 		    break;
 		} else {
 		    System.out.println("Nope! Try again.");
+                    i = scan.nextInt();
 		}
 	    }
-	    
+
+	    // Print out the new board
+	    System.out.println(node.getBoard());
 	    return opponent.play(node, this);
 	}
     }	

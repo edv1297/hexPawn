@@ -1,0 +1,31 @@
+//SSP-EDV 
+
+public class ComputerPlayer implements Player {
+
+    protected char player;
+
+    protected String result = "";
+
+    public ComputerPlayer(char m) {
+	this.player = m;
+    }
+
+    public char getSymbol() {return player;}
+    
+    public boolean isComp() {return true;}
+
+       public Player play(GameTree node, Player opponent) {
+	
+	// Scenario analysis: win, loss, or neither?
+	if (node.getBoard().win(opponent.getSymbol()) ||
+	    node.getChildren().isEmpty()) {
+	    // The game is lost, admit defeat
+	    node.removeParent();
+	    return opponent;
+	} else {
+	    // Make a move
+	    node = node.makeAMove();
+	    return opponent.play(node, this);
+	}
+    }
+}

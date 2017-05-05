@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Iterator;
 
 public class HumanPlayer implements Player {
     protected char player;
@@ -23,21 +24,30 @@ public class HumanPlayer implements Player {
 	    System.out.println("You have lost");
 	    return opponent;
 	} else {
-	    // Make a move
-	    Scanner scan = new Scanner(System.in);   
-	    int counter = 1;
-	    for(GameTree gt:node.getChildren()){
-		System.out.println(counter + ". " + gt.getBoard()));
+
+            // Present all possible moves
+            Iterator iter = node.getBoard().moves(player).iterator();
+            int j = 0;
+	    while (iter.hasNext())
+	    {
+		System.out.println(j+". "+iter.next());
+		j++;
 	    }
-		int i = scan.nextInt();
-		while(true){
-		if(i>0 && i <=node.getChildren.size()){
+
+            // Listen for a selection
+            Scanner scan = new Scanner(System.in);
+	    int i = scan.nextInt();
+	    
+	    while (true) {
+		if(i > 0 && i <= node.getChildren().size()){
 		    node = node.getChildren().get(i-1);
 		    break;
-		}else{
+		} else {
 		    System.out.println("Nope! Try again.");
 		}
-		    return opponent.play(node, this);
-		}
-    }
+	    }
+	    
+	    return opponent.play(node, this);
+	}
+    }	
 }

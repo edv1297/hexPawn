@@ -12,5 +12,8 @@ public interface Player
     // post: game is played from this node on; winning player is returned
 
     public char getSymbol();
+    
+    public boolean isComp();
 }
  
+
