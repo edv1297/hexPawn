@@ -12,8 +12,10 @@ public interface Player
     // post: game is played from this node on; winning player is returned
 
     public char getSymbol();
+    // post: returns the symbol that this player plays with
     
     public boolean isComp();
+    // post: returns true if this player is automated, false otherwise
 }
  
 

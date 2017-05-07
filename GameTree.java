@@ -6,7 +6,7 @@ import structure5.*;
  *
  *  GameTree.java
  *
- *  Defines the behavior for a Hex-a-Pawn GameTree, which contains
+ *  Defines the behavior for a HexaPawn GameTree, which contains
  *  a representation for every move and outcome possible
  *
  **/
@@ -33,19 +33,6 @@ public class GameTree {
      *  @post returns a GameTree containing all possible games resulting
      *        from the given start board
      */
-    public GameTree(HexBoard start, char m) {
-
-	// Initialize the root as the given HexBoard
-	this.startBoard = start;
-	this.player = m;
-	this.possibleMoves = start.moves(m);
-	
-	// Initialize the children as the possible moves for 'm' from 'start'
-	this.children = new Vector<GameTree>();
-	this.populateChildren(this.startBoard, this.possibleMoves);
-	
-    }
-
     public GameTree(GameTree parent, HexBoard start, char m) {
 	// Initialize the root as the given HexBoard
 	this.parent = parent;
@@ -57,6 +44,9 @@ public class GameTree {
 	this.children = new Vector<GameTree>();
 	this.populateChildren(this.startBoard, this.possibleMoves);
     }
+
+    /** Special constructor for the starting board, which has no parent */
+    public GameTree(HexBoard start, char m) {this(null, start, m);}
     
     /**
      *  Recursive function that populates the children of a given game board
@@ -95,24 +85,26 @@ public class GameTree {
 	return children.get(r.nextInt(children.size()));
     }
 
-    /** Remove this leaf from the the gameTree */
+    /** Remove this node from the the GameTree */
     public void removeParent() {
-	this.parent.getParent().getChildren().remove(parent);
+        if (this.parent != null) {this.parent.getParent().getChildren().remove(parent);}
     }
 
     /** Returns a string representation for the GameTree */
     public String toString() {
-	String output = "";
+        String output = "";
+        Queue<GameTree> queue = new QueueVector<GameTree>();
+        queue.enqueue(this);
 
-	for (GameTree gt : children) {
-	    for (GameTree ch : gt.getChildren()) {
-		output += ch.toString();
-	    }
-	}
+        while (!queue.isEmpty()) {
+            GameTree curr = queue.dequeue();
+            output += (curr.getBoard() + "\n*-*-*-*-*-*-*");
 
-	output += startBoard.toString();
+            // Enqueue the children
+            for (GameTree ch : curr.getChildren()) {queue.enqueue(ch);}
+        }
 
-	return output;
+        return output;
     }
 
     /**
