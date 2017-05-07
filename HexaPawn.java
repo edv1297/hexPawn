@@ -17,14 +17,14 @@ import java.util.Scanner;
  *  (3^5+1)(3^4) = 19764 moves. 
  *
  *  2. If you have two computers pitted against each other and H.I.M. makes the first move,
- *  based on our design, H.I.M. will ultimately win more games. The first player will remove
- *  bad moves by removing the parent of its parent. The second computer will rarely make winning
- *  moves because it will concede early if it "knows" that there are no move possible winning 
- *  moves left. The first computer prunes the parent of the parent which does not allow the second
- *  machine to have any winning moves so it will result to conceding fairly frequently.
- *  In larger boards, the ratio will be more balanced for a small number of games but first computer will
+ *  based on our design, H.I.M. will ultimately win more games than H.E.R. The first player will remove
+ *  all the bad moves by removing the parent of its parent. The second computer will rarely make winning
+ *  moves because it will concede early if it "knows" that there are no winning moves possible 
+ *  Since the first computer prunes the parent of the parent which does not allow the second
+ *  machine to have any winning moves, it will result to the second player conceding fairly frequently.
+ *  In larger boards, the ratio will be more balanced for a small number of games but the first computer will
  *  eventually have the same ratio when you scale the number of games played because the GameTree would
- *  be more effectively pruned.
+ *  eventually be more effectively pruned to have only winning moves.
  * 
  **/
 
